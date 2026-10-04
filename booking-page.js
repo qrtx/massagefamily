@@ -14,7 +14,15 @@
   let selectedTime = '';
   const pad = (n) => String(n).padStart(2, '0');
   const times = ['10:00','12:00','14:00','16:00','18:00','20:00'];
+  let liveData;
+  let dataTools;
+  const status = document.createElement('p');
+  status.className = 'calendar-data-status';
+  status.setAttribute('role', 'status');
+  status.textContent = 'Загружаю расписание…';
+  document.querySelector('.booking-card')?.before(status);
   const available = (date) => {
+    if (dataTools && liveData) return dataTools.availableSlots(date, liveData);
     if (date.getDay() === 0) return [];
     const seed = date.getDate() + date.getMonth() * 13 + date.getFullYear();
     return times.filter((_, i) => (seed + i * 3) % 5 !== 0);
@@ -71,8 +79,22 @@
   submit.addEventListener('click', () => {
     if (!selectedDate || !selectedTime) return;
     const date = `${selectedDate.getDate()} ${names[selectedDate.getMonth()].toLowerCase()} ${selectedDate.getFullYear()}`;
-    const message = `Здравствуйте, Елена! Хочу записаться на ${service.value.toLowerCase()} ${date} в ${selectedTime}. Подтвердите, пожалуйста, свободно ли это время и актуальную стоимость.`;
+    const serviceName = service.selectedOptions[0]?.textContent || 'массаж';
+    const message = `Здравствуйте, Елена! Хочу записаться на ${serviceName.toLowerCase()} ${date} в ${selectedTime}. Подтвердите, пожалуйста, свободно ли это время и актуальную стоимость.`;
     window.open(`https://t.me/elenabelova77?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
   });
   renderCalendar();
+  import('./site-data.js').then((module) => {
+    dataTools = module;
+    liveData = module.readLocalData();
+    return import('./firebase-client.js');
+  }).then((firebase) => {
+    firebase.onValue(firebase.databaseRef('siteData'), (snapshot) => {
+      liveData = dataTools.mergeData(snapshot.val());
+      dataTools.saveLocalData(liveData);
+      status.textContent = snapshot.exists() ? 'Расписание обновляется онлайн · свободное время предварительное' : 'Демо-расписание · база пока пустая';
+      renderCalendar();
+      if (selectedDate) renderSlots(selectedDate);
+    }, () => { status.textContent = 'Локальное демо-расписание · нет доступа к базе'; });
+  }).catch(() => { status.textContent = 'Локальное демо-расписание'; });
 })();

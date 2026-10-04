@@ -105,7 +105,7 @@
 
       <section class="price-section section-shell" id="prices">
         <div class="section-heading reveal"><div><div class="section-kicker">03 / УСЛУГИ И СТОИМОСТЬ</div><h2>Выберите своё <em>время</em></h2></div><p>Цены и длительность указаны по предоставленному объявлению Avito. Для некоторых услуг указана стоимость «от»; точную сумму Елена подтвердит при записи.</p></div>
-        <div class="price-layout reveal"><div class="price-list">
+        <div class="price-layout reveal"><div class="price-list" data-live-price-list>
           <div class="price-row"><div><b>Оздоровительный / восстановительный массаж</b><small>1 час 30 минут</small></div><strong>от 5 000 ₽</strong></div>
           <div class="price-row"><div><b>Антистрессовый массаж</b><small>1 час 30 минут</small></div><strong>от 5 000 ₽</strong></div>
           <div class="price-row"><div><b>Миофасциальный массаж</b><small>1 час 30 минут</small></div><strong>от 5 500 ₽</strong></div>
@@ -123,6 +123,7 @@
 
       <section class="booking-section section-shell" id="booking">
         <div class="booking-heading reveal"><div class="section-kicker">04 / ЗАПИСЬ</div><h2>Найдите удобное <em>окно</em></h2><p>Выберите день и время — я свяжусь с вами, чтобы подтвердить запись.</p></div>
+        <p class="calendar-data-status" id="calendar-data-status" role="status">Загружаю расписание…</p>
         <div class="booking-card reveal">
           <div class="calendar-panel"><div class="calendar-title"><div><span class="eyebrow">КАЛЕНДАРЬ</span><h3 id="month-label">Октябрь 2026</h3></div><div class="calendar-arrows"><button type="button" id="prev-month" aria-label="Предыдущий месяц">‹</button><button type="button" id="next-month" aria-label="Следующий месяц">›</button></div></div><div class="calendar-weekdays"><span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span><span>ПТ</span><span>СБ</span><span>ВС</span></div><div class="calendar-grid" id="calendar-grid" aria-label="Дни месяца"></div><div class="calendar-legend"><span><i class="legend-open"></i>Есть окна</span><span><i class="legend-busy"></i>Нет окон</span><span><i class="legend-selected"></i>Выбрано</span></div></div>
           <div class="slots-panel"><div class="slots-head"><span class="eyebrow">ДОСТУПНОЕ ВРЕМЯ</span><h3 id="slots-date">Выберите день</h3><p id="slots-hint">Свободные окна отображаются зелёным.</p></div><div class="time-slots" id="time-slots"><p class="empty-slots">Выберите дату в календаре, чтобы увидеть время.</p></div><button class="button button-primary booking-submit" id="booking-submit" type="button" disabled>Отправить запрос <svg><use href="#i-arrow" /></svg></button><p class="confirm-note"><svg><use href="#i-check" /></svg> Запрос не подтверждает запись. Я отвечу вам лично.</p></div>
@@ -151,6 +152,6 @@
       <a class="nav-item nav-booking" href="./booking.html" data-section="booking"><span class="nav-icon"><svg><use href="#i-calendar" /></svg></span><span>Запись</span></a>
     </nav>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./app.js?v=9" defer></script>
+    <script type="module" src="./prices-live.js?v=1"></script><script src="./app.js?v=10" defer></script>
   </body>
 </html>

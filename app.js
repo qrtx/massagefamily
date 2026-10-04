@@ -19,6 +19,17 @@
   }, true);
   const footerMeta = document.querySelector('.site-footer > span');
   if (footerMeta) footerMeta.innerHTML = `© <span>${new Date().getFullYear()}</span> · Created by QRTX`;
+  const headerRight = document.querySelector('.header-right');
+  if (headerRight && !headerRight.querySelector('[data-admin-link]')) {
+    const adminLink = document.createElement('a');
+    adminLink.href = './admin.html';
+    adminLink.className = 'admin-entry';
+    adminLink.setAttribute('aria-label', 'Войти в админ-панель');
+    adminLink.title = 'Вход в админ-панель';
+    adminLink.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8c.4-3.8 2.7-5.8 7-5.8s6.6 2 7 5.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Админ</span>';
+    adminLink.dataset.adminLink = 'true';
+    headerRight.insertBefore(adminLink, document.querySelector('#theme-toggle'));
+  }
   const grid = document.querySelector('#calendar-grid');
   const monthLabel = document.querySelector('#month-label');
   const slotsDate = document.querySelector('#slots-date');
@@ -34,6 +45,14 @@
   let selectedDay = null;
   let selectedTime = null;
   let toastTimer;
+  let siteData;
+  let siteDataModule;
+  const localDataModule = import('./site-data.js').then((module) => {
+    siteDataModule = module;
+    siteData = module.readLocalData();
+    renderCalendar();
+    if (selectedDay) renderSlots(selectedDay);
+  });
 
   function showToast(message) {
     const toast = document.querySelector('#toast');
@@ -66,7 +85,7 @@
   }
 
   function scheduleFor(date) {
-    // A sample schedule for the visual prototype. Elena confirms each request personally.
+    if (siteDataModule && siteData) return siteDataModule.availableSlots(date, siteData);
     if (date.getDay() === 0) return [];
     const base = ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
     const seed = date.getDate() + date.getMonth() * 13 + date.getFullYear();
@@ -183,6 +202,22 @@
     window.open(`https://t.me/elenabelova77?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
   });
   renderCalendar();
+  localDataModule.then(() => import('./firebase-client.js')).then((firebase) => {
+    firebase.onValue(firebase.databaseRef('siteData'), (snapshot) => {
+      siteData = siteDataModule.mergeData(snapshot.val());
+      siteDataModule.saveLocalData(siteData);
+      const badge = document.querySelector('#calendar-data-status');
+      if (badge) badge.textContent = snapshot.exists() ? 'Расписание обновляется онлайн' : 'Демо-расписание · база пока пустая';
+      renderCalendar();
+      if (selectedDay) renderSlots(selectedDay);
+    }, () => {
+      const badge = document.querySelector('#calendar-data-status');
+      if (badge) badge.textContent = 'Локальное демо-расписание';
+    });
+  }).catch(() => {
+    const badge = document.querySelector('#calendar-data-status');
+    if (badge) badge.textContent = 'Локальное демо-расписание';
+  });
   document.querySelector('#year').textContent = String(new Date().getFullYear());
 
   const revealItems = document.querySelectorAll('.reveal');
@@ -257,7 +292,7 @@
     });
   }
 
-  document.querySelectorAll('.button, .nav-item, .calendar-arrows button, .theme-toggle').forEach((element) => {
+  document.querySelectorAll('.button, .nav-item, .calendar-arrows button, .theme-toggle, .admin-entry').forEach((element) => {
     element.addEventListener('pointerdown', (event) => {
       const rect = element.getBoundingClientRect();
       const ripple = document.createElement('span');

@@ -43,7 +43,7 @@
     reveals.forEach((el) => observer.observe(el));
     document.documentElement.classList.add('js-motion');
   } else reveals.forEach((el) => el.classList.add('in-view'));
-  document.querySelectorAll('.button, .nav-item, .theme-toggle, .catalog-card').forEach((element) => {
+  document.querySelectorAll('.button, .nav-item, .theme-toggle, .admin-entry, .catalog-card').forEach((element) => {
     element.addEventListener('pointerdown', () => element.classList.add('pressed'));
     for (const event of ['pointerup','pointerleave','blur']) element.addEventListener(event, () => element.classList.remove('pressed'));
   });
@@ -51,6 +51,22 @@
   if (year) year.textContent = String(new Date().getFullYear());
   const footerMeta = document.querySelector('.site-footer > span');
   if (footerMeta) footerMeta.innerHTML = `© <span>${new Date().getFullYear()}</span> · Created by QRTX`;
+  if (!document.body.classList.contains('admin-page')) {
+    const headerRight = document.querySelector('.header-right');
+    if (headerRight && !headerRight.querySelector('[data-admin-link]')) {
+      const adminLink = document.createElement('a');
+      adminLink.href = './admin.html';
+      adminLink.className = 'admin-entry';
+      adminLink.setAttribute('aria-label', 'Войти в админ-панель');
+      adminLink.title = 'Вход в админ-панель';
+      adminLink.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8c.4-3.8 2.7-5.8 7-5.8s6.6 2 7 5.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Админ</span>';
+      adminLink.dataset.adminLink = 'true';
+      headerRight.insertBefore(adminLink, theme);
+    }
+  }
+  if (!document.body.classList.contains('admin-page') && document.querySelector('.price-list, #service-select')) {
+    import('./prices-live.js').catch(() => {});
+  }
   const progress = document.querySelector('.scroll-progress');
   let pending = false;
   window.addEventListener('scroll', () => {

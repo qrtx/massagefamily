@@ -1,7 +1,7 @@
-const CACHE_NAME = 'massagefamily-v12';
+const CACHE_NAME = 'massagefamily-v14';
 const APP_SHELL = [
-  './', './index.html', './about.html', './services.html', './prices.html', './booking.html',
-  './styles.css', './app.js', './site-common.js', './booking-page.js', './site.webmanifest', './assets/leaf.svg',
+  './', './index.html', './about.html', './services.html', './prices.html', './booking.html', './admin.html',
+  './styles.css', './app.js', './site-common.js', './booking-page.js', './admin.js', './site-data.js', './prices-live.js', './firebase-client.js', './site.webmanifest', './assets/leaf.svg',
   './assets/photos/hero.jpg', './assets/photos/massage.jpg', './assets/photos/practice.jpg',
   './assets/photos/gallery/session-01.webp', './assets/photos/gallery/session-02.webp',
   './assets/photos/gallery/session-03.webp', './assets/photos/gallery/session-04.webp',

@@ -3,7 +3,7 @@
   "short_name": "massagefamily",
   "description": "Бережный массаж Елены Беловой в Москве",
   "lang": "ru",
-  "start_url": "./",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#ecf4e9",

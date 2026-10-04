@@ -1,4 +1,4 @@
-const CACHE_NAME = 'massagefamily-v11';
+const CACHE_NAME = 'massagefamily-v12';
 const APP_SHELL = [
   './', './index.html', './about.html', './services.html', './prices.html', './booking.html',
   './styles.css', './app.js', './site-common.js', './booking-page.js', './site.webmanifest', './assets/leaf.svg',

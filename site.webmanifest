@@ -1,0 +1,14 @@
+{
+  "name": "Елена Белова — забота о себе",
+  "short_name": "Забота о себе",
+  "description": "Массаж и забота о себе в Москве",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f9f4",
+  "theme_color": "#f7f9f4",
+  "icons": [
+    { "src": "./assets/leaf.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

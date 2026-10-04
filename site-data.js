@@ -1,5 +1,5 @@
 export const DB_PATH = 'siteData';
-export const LOCAL_DATA_KEY = 'massagefamily-demo-data-v1';
+export const LOCAL_DATA_KEY = 'massagefamily-demo-data-v2';
 export const TIME_SLOTS = ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
 
 export const DEFAULT_SERVICES = [
@@ -54,11 +54,9 @@ export function saveLocalData(data) {
 
 export function availableSlots(date, data) {
   const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-  if (date.getDay() === 0 || data?.calendar?.closedDays?.[key]) return [];
-  const seed = date.getDate() + date.getMonth() * 13 + date.getFullYear();
-  const sample = TIME_SLOTS.filter((_, index) => (seed + index * 3) % 5 !== 0);
+  if (data?.calendar?.closedDays?.[key]) return [];
   const booked = data?.calendar?.bookings?.[key] || {};
-  return sample.filter((time) => !booked[time.replace(':', '-')]);
+  return TIME_SLOTS.filter((time) => !booked[time.replace(':', '-')]);
 }
 
 export function subscribeToData(onData, onError) {

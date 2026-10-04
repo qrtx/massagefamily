@@ -94,10 +94,7 @@
 
   function scheduleFor(date) {
     if (siteDataModule && siteData) return siteDataModule.availableSlots(date, siteData);
-    if (date.getDay() === 0) return [];
-    const base = ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
-    const seed = date.getDate() + date.getMonth() * 13 + date.getFullYear();
-    return base.filter((_, index) => (seed + index * 3) % 5 !== 0);
+    return ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
   }
 
   function clearChoice() {

@@ -23,9 +23,7 @@
   document.querySelector('.booking-card')?.before(status);
   const available = (date) => {
     if (dataTools && liveData) return dataTools.availableSlots(date, liveData);
-    if (date.getDay() === 0) return [];
-    const seed = date.getDate() + date.getMonth() * 13 + date.getFullYear();
-    return times.filter((_, i) => (seed + i * 3) % 5 !== 0);
+    return times;
   };
   function renderSlots(date) {
     selectedDate = date;

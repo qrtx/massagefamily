@@ -1,5 +1,12 @@
-const CACHE_NAME = 'elena-belova-v1';
-const APP_SHELL = ['./', './index.html', './styles.css', './app.js', './site.webmanifest', './assets/leaf.svg'];
+const CACHE_NAME = 'massagefamily-v11';
+const APP_SHELL = [
+  './', './index.html', './about.html', './services.html', './prices.html', './booking.html',
+  './styles.css', './app.js', './site-common.js', './booking-page.js', './site.webmanifest', './assets/leaf.svg',
+  './assets/photos/hero.jpg', './assets/photos/massage.jpg', './assets/photos/practice.jpg',
+  './assets/photos/gallery/session-01.webp', './assets/photos/gallery/session-02.webp',
+  './assets/photos/gallery/session-03.webp', './assets/photos/gallery/session-04.webp',
+  './assets/photos/gallery/session-05.webp'
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));

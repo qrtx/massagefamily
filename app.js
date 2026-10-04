@@ -30,6 +30,14 @@
     adminLink.dataset.adminLink = 'true';
     headerRight.insertBefore(adminLink, document.querySelector('#theme-toggle'));
   }
+  const priceNav = document.querySelector('.floating-nav a[href$="prices.html"]');
+  if (priceNav) {
+    const icon = priceNav.querySelector('.nav-icon');
+    const label = priceNav.querySelector('span:last-child');
+    if (icon) icon.textContent = '✧';
+    if (label) label.textContent = 'Услуги';
+    priceNav.setAttribute('aria-label', 'Услуги и цены');
+  }
   const grid = document.querySelector('#calendar-grid');
   const monthLabel = document.querySelector('#month-label');
   const slotsDate = document.querySelector('#slots-date');

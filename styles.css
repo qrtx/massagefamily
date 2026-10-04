@@ -238,13 +238,14 @@ body[data-theme="dark"] .service-feature { background: linear-gradient(145deg, r
 .price-section { background: linear-gradient(180deg, transparent, rgba(201, 228, 191, .12), transparent); }
 .price-layout { display: grid; grid-template-columns: 1.55fr .78fr; align-items: start; gap: 50px; }
 .price-list { overflow: hidden; border: 1px solid var(--glass-edge); border-radius: 24px 24px 24px 7px; background: var(--surface); backdrop-filter: blur(22px); box-shadow: var(--glass-shadow); }
-.price-row { min-height: 69px; display: flex; align-items: center; justify-content: space-between; gap: 21px; padding: 12px 24px; border-bottom: 1px solid var(--line); transition: background .25s, padding .25s; }
+.price-row { min-height: 69px; display: flex; align-items: flex-start; justify-content: space-between; gap: 21px; padding: 15px 24px; border-bottom: 1px solid var(--line); transition: background .25s, padding .25s; }
 .price-row:last-child { border-bottom: 0; }
 .price-row:hover { padding-inline: 28px 20px; background: rgba(181, 229, 165, .14); }
-.price-row div { display: grid; gap: 3px; }
+.price-row div { display: grid; flex: 1; min-width: 0; gap: 3px; }
 .price-row b { font-size: 11px; font-weight: 700; }
 .price-row small { color: var(--muted); font-size: 9px; }
-.price-row strong { white-space: nowrap; color: var(--leaf-dark); font: 21px var(--serif); }
+.price-row .price-description { max-width: 620px; margin: 5px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.price-row strong { flex: 0 0 auto; margin-top: 1px; white-space: nowrap; color: var(--leaf-dark); font: 21px var(--serif); }
 .price-aside { position: sticky; top: 22px; overflow: hidden; padding: 30px 27px 25px; border: 1px solid rgba(255,255,255,.36); border-radius: 26px 26px 26px 7px; color: #f2ffeb; background: linear-gradient(140deg, #174d2c, #26733e); box-shadow: 0 21px 55px rgba(19, 77, 37, .21); }
 .price-aside::before { content: ""; position: absolute; right: -64px; top: -86px; width: 235px; height: 235px; border: 1px solid rgba(232,255,217,.22); border-radius: 50%; box-shadow: 0 0 0 27px rgba(232,255,217,.05), 0 0 0 69px rgba(232,255,217,.04); }
 .aside-flower { position: absolute; right: 7px; top: -23px; color: rgba(220,255,186,.34); font-size: 75px; animation: slow-turn 28s linear infinite; }
@@ -560,6 +561,7 @@ body[data-theme="dark"] .floating-nav { box-shadow: 0 18px 52px rgba(0,0,0,.48),
   .price-row:hover { padding-inline: 18px 14px; }
   .price-row b { font-size: 10px; line-height: 1.5; }
   .price-row small { font-size: 8px; }
+  .price-row .price-description { font-size: 10px; line-height: 1.55; }
   .price-row strong { font-size: 19px; }
   .price-aside { position: relative; top: auto; padding: 25px 22px; }
   .price-aside h3 { font-size: 25px; }
@@ -659,7 +661,8 @@ body[data-theme="dark"] .floating-nav { box-shadow: 0 18px 52px rgba(0,0,0,.48),
 .admin-login-form, .new-service-form { display: grid; gap: 14px; }
 .admin-login-form h2, .admin-section-heading h2 { margin: 0 0 4px; }
 .admin-login-form label, .admin-service-row label, .new-service-form label { display: grid; gap: 7px; color: var(--muted, #879b8d); font-size: 12px; }
-.admin-login-form input, .admin-service-row input, .new-service-form input, .admin-calendar-panel select { width: 100%; min-height: 46px; border: 1px solid var(--line, rgba(130,170,140,.24)); border-radius: 14px; padding: 10px 13px; color: var(--ink, #e7f1e9); background: var(--glass, rgba(255,255,255,.06)); font: inherit; }
+.admin-login-form input, .admin-service-row input, .new-service-form input, .admin-calendar-panel select, .admin-service-row textarea, .new-service-form textarea { width: 100%; min-height: 46px; border: 1px solid var(--line, rgba(130,170,140,.24)); border-radius: 14px; padding: 10px 13px; color: var(--ink, #e7f1e9); background: var(--glass, rgba(255,255,255,.06)); font: inherit; }
+.admin-service-row textarea, .new-service-form textarea { min-height: 72px; resize: vertical; line-height: 1.5; }
 .admin-hint, .admin-disclaimer { color: var(--muted, #879b8d); font-size: 12px; line-height: 1.65; }
 .admin-hint code { color: var(--ink, #e7f1e9); }
 .admin-disclaimer { margin: 18px 0 0; padding: 14px 16px; border-radius: 16px; background: rgba(180,220,170,.08); }

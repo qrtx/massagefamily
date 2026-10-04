@@ -1,7 +1,7 @@
 (() => {
   const LOGIN = 'admin';
-  const PASSWORD = 'massagefamily-demo';
-  const sessionKey = 'massagefamily-demo-admin';
+  const PASSWORD = 'Admin5237';
+  const sessionKey = 'massagefamily-admin-session-v2';
   const loginPanel = document.querySelector('#admin-login-panel');
   const workspace = document.querySelector('#admin-workspace');
   const loginForm = document.querySelector('#admin-login-form');
@@ -99,13 +99,14 @@
     serviceList.replaceChildren();
     services.forEach((service) => {
       const row = document.createElement('form'); row.className = 'admin-service-row'; row.dataset.id = service.id;
-      row.innerHTML = `<label>Услуга<input name="name" required maxlength="90"></label><div class="form-pair"><label>Время<input name="duration" required maxlength="60"></label><label>Цена · ₽<input name="price" required type="number" min="0" step="100"></label></div><div class="admin-row-actions"><button class="button button-outline" type="submit">Сохранить</button><button class="admin-delete" type="button" aria-label="Удалить услугу"></button></div>`;
+      row.innerHTML = `<label>Услуга<input name="name" required maxlength="90"></label><label>Описание<textarea name="description" maxlength="260" rows="3"></textarea></label><div class="form-pair"><label>Время<input name="duration" required maxlength="60"></label><label>Цена · ₽<input name="price" required type="number" min="0" step="100"></label></div><div class="admin-row-actions"><button class="button button-outline" type="submit">Сохранить</button><button class="admin-delete" type="button" aria-label="Удалить услугу"></button></div>`;
       row.elements.name.value = service.name || '';
+      row.elements.description.value = service.description || '';
       row.elements.duration.value = service.duration || '';
       row.elements.price.value = String(Number(service.price) || 0);
       row.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const updated = { ...service, name: row.elements.name.value.trim(), duration: row.elements.duration.value.trim(), price: Number(row.elements.price.value) };
+        const updated = { ...service, name: row.elements.name.value.trim(), description: row.elements.description.value.trim(), duration: row.elements.duration.value.trim(), price: Number(row.elements.price.value) };
         const saved = await writePath(`${dataTools.DB_PATH}/services/${service.id}`, updated);
         setStatus(saved ? `Сохранено в Firebase: ${updated.name}` : 'Сохранено локально; Firebase пока запрещает запись', saved ? 'online' : 'offline');
       });
@@ -195,7 +196,7 @@
   document.querySelector('#new-service-form').addEventListener('submit', async (event) => {
     event.preventDefault(); const form = event.currentTarget;
     const name = form.elements.name.value.trim(); const id = `${name.toLowerCase().replace(/[^a-zа-я0-9]+/gi, '-').replace(/^-|-$/g, '')}-${Date.now().toString(36)}`;
-    const service = { id, name, duration: form.elements.duration.value.trim(), price: Number(form.elements.price.value) };
+    const service = { id, name, description: form.elements.description.value.trim(), duration: form.elements.duration.value.trim(), price: Number(form.elements.price.value) };
     const saved = await writePath(`${dataTools.DB_PATH}/services/${id}`, service);
     form.reset(); setStatus(saved ? `Добавлена услуга: ${name}` : 'Услуга добавлена локально; Firebase пока запрещает запись', saved ? 'online' : 'offline');
   });
@@ -215,6 +216,14 @@
   });
 
   bookingTime.replaceChildren(...timeSlots.map((time) => { const option = document.createElement('option'); option.value = time; option.textContent = time; return option; }));
+  const newServiceForm = document.querySelector('#new-service-form');
+  const newDescriptionLabel = document.createElement('label');
+  newDescriptionLabel.textContent = 'Короткое описание';
+  const newDescription = document.createElement('textarea');
+  newDescription.name = 'description'; newDescription.maxLength = 260; newDescription.rows = 3;
+  newDescription.placeholder = 'Что входит в услугу и как подбирается интенсивность';
+  newDescriptionLabel.append(newDescription);
+  newServiceForm.insertBefore(newDescriptionLabel, newServiceForm.querySelector('button[type="submit"]'));
   bookingForm.addEventListener('submit', async (event) => {
     event.preventDefault(); if (!selectedDate) return;
     const key = dateKey(selectedDate); const time = bookingTime.value;

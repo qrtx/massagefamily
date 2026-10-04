@@ -30,6 +30,15 @@
   setTheme(body.dataset.theme);
   theme?.addEventListener('click', () => setTheme(body.dataset.theme === 'dark' ? 'light' : 'dark'));
   const page = location.pathname.split('/').pop() || 'index.html';
+  if (page === 'prices.html') document.title = 'Услуги и цены — massagefamily';
+  const priceNav = document.querySelector('.floating-nav a[href$="prices.html"]');
+  if (priceNav) {
+    const icon = priceNav.querySelector('.nav-icon');
+    const label = priceNav.querySelector('span:last-child');
+    if (icon) icon.textContent = '✧';
+    if (label) label.textContent = 'Услуги';
+    priceNav.setAttribute('aria-label', 'Услуги и цены');
+  }
   document.querySelectorAll('.nav-item').forEach((item) => {
     const active = item.getAttribute('href') === page;
     item.classList.toggle('current', active);

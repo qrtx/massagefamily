@@ -3,19 +3,19 @@ export const LOCAL_DATA_KEY = 'massagefamily-demo-data-v1';
 export const TIME_SLOTS = ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
 
 export const DEFAULT_SERVICES = [
-  { id: 'recovery', name: 'Оздоровительный / восстановительный массаж', duration: '1 час 30 минут', price: 5000 },
-  { id: 'anti-stress', name: 'Антистрессовый массаж', duration: '1 час 30 минут', price: 5000 },
-  { id: 'arm', name: 'Артикуляционно-рефлекторный массаж · АРМ', duration: '1 час', price: 5000 },
-  { id: 'lymphatic', name: 'Лимфодренажный массаж', duration: '1 час 30 минут', price: 5000 },
-  { id: 'myofascial', name: 'Миофасциальный массаж', duration: '1 час 30 минут', price: 5500 },
-  { id: 'visceral', name: 'Висцеральный массаж', duration: '1 час 30 минут', price: 6000 },
-  { id: 'face', name: 'Массаж лица', duration: '1 час 30 минут', price: 5000 },
-  { id: 'bms-face', name: 'БМС-массаж лица на аппарате Назарова', duration: '1 час', price: 5000 },
-  { id: 'full-body', name: 'Массаж всего тела', duration: '2 часа', price: 7000 },
-  { id: 'chest', name: 'Массаж груди', duration: '1 час 30 минут', price: 5000 },
-  { id: 'pelvic-floor', name: 'Массаж тазового дна', duration: '1 час', price: 5000 },
-  { id: 'relax', name: 'Расслабляющий массаж', duration: '1 час 30 минут', price: 5000 },
-  { id: 'taping', name: 'Кинезиотейпирование / тейпирование', duration: '15 минут · тейпы приобретаются отдельно', price: 1000 }
+  { id: 'recovery', name: 'Оздоровительный / восстановительный массаж', duration: '1 час 30 минут', price: 5000, description: 'Комплексный сеанс: под запрос можно сочетать классические и мягкие восстановительные приёмы. Зоны и интенсивность обсуждаем до начала.' },
+  { id: 'anti-stress', name: 'Антистрессовый массаж', duration: '1 час 30 минут', price: 5000, description: 'Сеанс с акцентом на расслабление и ощущение комфорта. Темп и глубину воздействия подбираю по вашим ощущениям.' },
+  { id: 'arm', name: 'Артикуляционно-рефлекторный массаж · АРМ', duration: '1 час', price: 5000, description: 'Артикуляционно-рефлекторная техника для бережной работы с телом. Подходит не всем — формат предварительно обсудим лично.' },
+  { id: 'lymphatic', name: 'Лимфодренажный массаж', duration: '1 час 30 минут', price: 5000, description: 'Последовательная мягкая проработка с лимфодренажными приёмами. Интенсивность подбираю индивидуально.' },
+  { id: 'myofascial', name: 'Миофасциальный массаж', duration: '1 час 30 минут', price: 5500, description: 'Более глубокая работа с фасциями и мышечным напряжением; особое внимание — чувствительным зонам и вашим ощущениям.' },
+  { id: 'visceral', name: 'Висцеральный массаж', duration: '1 час 30 минут', price: 6000, description: 'Деликатная ручная работа с областью живота. До сеанса обсудим самочувствие, противопоказания и комфортность такого формата.' },
+  { id: 'face', name: 'Массаж лица', duration: '1 час 30 минут', price: 5000, description: 'Спокойная ручная проработка лица, шеи и зоны декольте — с учётом чувствительности кожи и ваших пожеланий.' },
+  { id: 'bms-face', name: 'БМС-массаж лица на аппарате Назарова', duration: '1 час', price: 5000, description: 'Сеанс с аппаратом Назарова для биомеханической стимуляции. Подход и интенсивность обсудим заранее.' },
+  { id: 'full-body', name: 'Массаж всего тела', duration: '2 часа', price: 7000, description: 'Продолжительный сеанс для последовательной работы с разными зонами тела. Состав и интенсивность согласуем перед началом.' },
+  { id: 'chest', name: 'Массаж груди', duration: '1 час 30 минут', price: 5000, description: 'Деликатная работа с областью груди и плечевого пояса. Возможность и формат процедуры предварительно обсуждаются индивидуально.' },
+  { id: 'pelvic-floor', name: 'Массаж тазового дна', duration: '1 час', price: 5000, description: 'Бережная работа с областью тазового дна — только с вашего согласия и с учётом самочувствия. Детали обсудим до записи.' },
+  { id: 'relax', name: 'Расслабляющий массаж', duration: '1 час 30 минут', price: 5000, description: 'Неспешный сеанс, где комфорт и возможность немного выдохнуть — в приоритете.' },
+  { id: 'taping', name: 'Кинезиотейпирование / тейпирование', duration: '15 минут · тейпы приобретаются отдельно', price: 1000, description: 'Наложение кинезиотейпа по выбранной зоне. Схему обсудим заранее; тейпы приобретаются отдельно.' }
 ];
 
 export function emptyData() {
@@ -25,7 +25,9 @@ export function emptyData() {
 export function mergeData(data) {
   const defaults = emptyData();
   if (!data || typeof data !== 'object') return defaults;
-  const remoteServices = data.services && typeof data.services === 'object' ? data.services : {};
+  const remoteServices = Array.isArray(data.services)
+    ? Object.fromEntries(data.services.filter((service) => service && service.id).map((service) => [service.id, service]))
+    : data.services && typeof data.services === 'object' ? data.services : {};
   defaults.services = defaults.services.map((service) => ({ ...service, ...(remoteServices[service.id] || {}) })).filter((service) => service.active !== false);
   Object.entries(remoteServices).forEach(([id, service]) => {
     if (!defaults.services.some((entry) => entry.id === id) && service?.active !== false) defaults.services.push({ id, ...service });

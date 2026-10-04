@@ -3,21 +3,34 @@ import { DEFAULT_SERVICES, mergeData, readLocalData, saveLocalData } from './sit
 const lists = document.querySelectorAll('[data-live-price-list], .price-list');
 const serviceSelect = document.querySelector('#service-select');
 
+if (document.body.classList.contains('prices-page')) document.title = 'Услуги и цены — massagefamily';
+const priceNav = document.querySelector('.floating-nav a[href$="prices.html"]');
+if (priceNav) {
+  const icon = priceNav.querySelector('.nav-icon');
+  const label = priceNav.querySelector('span:last-child');
+  if (icon) icon.textContent = '✧';
+  if (label) label.textContent = 'Услуги';
+  priceNav.setAttribute('aria-label', 'Услуги и цены');
+}
+
 function render(data) {
   lists.forEach((list) => {
     list.replaceChildren();
     data.services.forEach((service) => {
       const row = document.createElement('div');
       row.className = 'price-row';
-      const description = document.createElement('div');
+      const copy = document.createElement('div');
       const name = document.createElement('b');
       const duration = document.createElement('small');
+      const description = document.createElement('p');
       const price = document.createElement('strong');
       name.textContent = service.name;
       duration.textContent = service.duration;
+      description.className = 'price-description';
+      description.textContent = service.description || 'Подход, зоны и интенсивность подбираются индивидуально после короткого разговора.';
       price.textContent = `от ${Number(service.price).toLocaleString('ru-RU')} ₽`;
-      description.append(name, duration);
-      row.append(description, price);
+      copy.append(name, duration, description);
+      row.append(copy, price);
       list.append(row);
     });
   });

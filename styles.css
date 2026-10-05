@@ -697,6 +697,19 @@ body[data-theme="dark"] .floating-nav { box-shadow: 0 18px 52px rgba(0,0,0,.48),
 .admin-booking-item span { display: grid; gap: 3px; }
 .admin-booking-item small { color: var(--muted, #879b8d); }
 .admin-page .site-footer { margin-top: 26px; }
+.messenger-dialog { width: min(440px, calc(100vw - 32px)); max-width: none; border: 1px solid var(--line); border-radius: 24px; padding: 30px; color: var(--ink); background: var(--surface-solid); box-shadow: 0 24px 80px rgba(6, 30, 15, .3); }
+.messenger-dialog::backdrop { background: rgba(4, 24, 14, .62); backdrop-filter: blur(8px); }
+.messenger-dialog h2 { margin: 0 34px 10px 0; font: 600 1.65rem/1.15 var(--serif); }
+.messenger-dialog-copy { color: var(--muted); line-height: 1.6; }
+.messenger-close { position: absolute; top: 14px; right: 16px; width: 38px; height: 38px; border: 0; border-radius: 50%; color: var(--ink); background: var(--page-soft); font-size: 1.6rem; cursor: pointer; }
+.messenger-options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 22px; }
+.messenger-options > .button { min-height: 54px; align-self: start; justify-content: center; }
+.messenger-max { display: grid; justify-items: start; gap: 9px; padding: 12px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.messenger-max > span { font-weight: 700; letter-spacing: .02em; }
+.messenger-max .button { width: 100%; justify-content: center; }
+.messenger-message-tools { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.messenger-message-tools p { color: var(--muted); font-size: .88rem; }
+@media (max-width: 480px) { .messenger-dialog { padding: 24px 18px; } .messenger-options { grid-template-columns: 1fr; } }
 @media (max-width: 850px) { .admin-grid { grid-template-columns: 1fr; } }
 @media (max-width: 560px) {
   .admin-toolbar, .admin-toolbar-actions { align-items: stretch; flex-direction: column; }

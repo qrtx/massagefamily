@@ -1,5 +1,17 @@
 (() => {
   const body = document.body;
+  const messengerModule = import('./messenger.js');
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('[data-messenger-chooser], a[href^="https://t.me/"]');
+    if (!link || window.massagefamilyMessengerReady) return;
+    event.preventDefault();
+    messengerModule.then(() => window.dispatchEvent(new CustomEvent('massagefamily:contact', { detail: { message: link.dataset.message || '' } }))).catch(() => {});
+  }, true);
+  window.addEventListener('massagefamily:contact', (event) => {
+    if (window.massagefamilyMessengerReady) return;
+    const message = event.detail?.message || '';
+    messengerModule.then(() => window.dispatchEvent(new CustomEvent('massagefamily:contact', { detail: { message } }))).catch(() => {});
+  });
   const theme = document.querySelector('#theme-toggle');
   const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const loader = document.createElement('div');
@@ -30,6 +42,17 @@
   setTheme(body.dataset.theme);
   theme?.addEventListener('click', () => setTheme(body.dataset.theme === 'dark' ? 'light' : 'dark'));
   const page = location.pathname.split('/').pop() || 'index.html';
+  if (page === 'booking.html') {
+    const intro = document.querySelector('.page-intro > p:last-child');
+    if (intro) intro.textContent = 'Работаю только с женщинами; девочек-подростков принимаю, если мама регулярно ходит ко мне на массаж. Выберите примерный день и время, затем — куда отправить запрос: в Telegram или MAX.';
+    const service = document.querySelector('#service-select');
+    if (service && !service.querySelector('[data-teen-option]')) {
+      const option = document.createElement('option');
+      option.textContent = 'Массаж для дочки-подростка (мама — постоянная клиентка)';
+      option.dataset.teenOption = 'true';
+      service.append(option);
+    }
+  }
   if (page === 'prices.html') document.title = 'Услуги и цены — massagefamily';
   const priceNav = document.querySelector('.floating-nav a[href$="prices.html"]');
   if (priceNav) {

@@ -204,7 +204,7 @@
     if (!selectedDay || !selectedTime) return;
     const dateText = `${selectedDay.getDate()} ${monthNames[selectedDay.getMonth()].toLowerCase()} ${selectedDay.getFullYear()}`;
     const message = `Здравствуйте, Елена! Хочу записаться на массаж ${dateText} в ${selectedTime}. Подтвердите, пожалуйста, доступность и актуальную стоимость.`;
-    window.open(`https://t.me/elenabelova77?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    window.dispatchEvent(new CustomEvent('massagefamily:contact', { detail: { message } }));
   });
   renderCalendar();
   localDataModule.then(() => import('./firebase-client.js')).then((firebase) => {

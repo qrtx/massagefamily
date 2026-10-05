@@ -79,7 +79,7 @@
     const date = `${selectedDate.getDate()} ${names[selectedDate.getMonth()].toLowerCase()} ${selectedDate.getFullYear()}`;
     const serviceName = service.selectedOptions[0]?.textContent || 'массаж';
     const message = `Здравствуйте, Елена! Хочу записаться на ${serviceName.toLowerCase()} ${date} в ${selectedTime}. Подтвердите, пожалуйста, свободно ли это время и актуальную стоимость.`;
-    window.open(`https://t.me/elenabelova77?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    window.dispatchEvent(new CustomEvent('massagefamily:contact', { detail: { message } }));
   });
   renderCalendar();
   import('./site-data.js').then((module) => {
